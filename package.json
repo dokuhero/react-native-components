@@ -1,0 +1,69 @@
+{
+  "name": "@dokuhero/react-native-components",
+  "version": "0.0.0",
+  "description": "Sets of React Native components that works with dokuhero/react-native-theme and react-i18next",
+  "main": "dist/index.js",
+  "typings": "typings/index.d.ts",
+  "files": [
+    "dist",
+    "typings"
+  ],
+  "scripts": {
+    "lint": "tslint 'src/**/*.ts{,x}'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc -d --declarationDir ./typings",
+    "build": "rm -rf typings && rm -rf dist && npm run compile && prettier ./typings/**/*.d.ts --write && cp -r ./typings-ex ./typings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dokuhero/react-native-components.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "component"
+  ],
+  "author": "Budi Adiono <budiadiono@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dokuhero/react-native-components/issues"
+  },
+  "homepage": "https://github.com/dokuhero/react-native-components#readme",
+  "dependencies": {
+    "react-native-calculator": "^0.2.1",
+    "react-native-custom-picker": "^0.2.0",
+    "react-native-elements": "^0.19.1",
+    "react-native-super-grid": "^2.4.3",
+    "validate.js": "^0.12.0"
+  },
+  "peerDependencies": {
+    "@dokuhero/react-18n-ts-helper": "*",
+    "@dokuhero/react-native-theme": "*",
+    "expo": "*",
+    "i18next": "*",
+    "react": "*",
+    "react-i18next": "*",
+    "react-native": "*",
+    "react-navigation": "*"
+  },
+  "devDependencies": {
+    "@dokuhero/react-18n-ts-helper": "^0.0.1",
+    "@dokuhero/react-native-theme": "^0.1.0",
+    "@types/expo": "^27.0.8",
+    "@types/react": "^16.4.14",
+    "@types/react-i18next": "^7.8.2",
+    "@types/react-native": "^0.56.18",
+    "@types/react-navigation": "^2.0.20",
+    "expo": "^30.0.0",
+    "i18next": "^11.9.0",
+    "prettier": "^1.14.2",
+    "react": "^16.5.0",
+    "react-i18next": "^7.12.0",
+    "react-native": "^0.57.0",
+    "react-navigation": "^2.14.0",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.0.3"
+  }
+}
