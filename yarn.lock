@@ -5101,9 +5101,9 @@ react-native-calculator@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-calculator/-/react-native-calculator-0.2.1.tgz#8486d0b222044082615127f2e949605d5f1450e0"
 
-react-native-custom-picker@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-custom-picker/-/react-native-custom-picker-0.2.0.tgz#56d5e78b47a730a0a2cf766c3b1f0eed5e297c23"
+react-native-custom-picker@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-custom-picker/-/react-native-custom-picker-0.3.0.tgz#345cb37b985ac074e45460fe67ddcadb07e02175"
 
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
