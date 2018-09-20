@@ -1,6 +1,6 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
 import { Icon, IconObject, ListItem } from 'react-native-elements'
 import { Utils } from '../utils'
@@ -19,7 +19,9 @@ export interface DropdownPickerProps<T> {
   footerAction?: () => void
   containerStyle?: StyleProp<ViewStyle>
   fieldContainerStyle?: StyleProp<ViewStyle>
+  fieldTextStyle?: StyleProp<TextStyle>
   optionContainerStyle?: StyleProp<ViewStyle>
+  optionTextStyle?: StyleProp<TextStyle>
   placeholder?: string
 }
 
@@ -40,6 +42,8 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
       containerStyle,
       fieldContainerStyle,
       optionContainerStyle,
+      fieldTextStyle,
+      optionTextStyle,
       placeholder
     }) => {
       const smMargin = theme.space.small || 10
@@ -47,6 +51,7 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
       const fieldTpl = (
         item: T,
         contrStyle?: StyleProp<ViewStyle>,
+        textStyle?: StyleProp<TextStyle>,
         clearFn?: () => void,
         margin: number = 0
       ) => (
@@ -66,6 +71,10 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
               undefined
             )
           }
+          titleStyle={textStyle}
+          textInputStyle={textStyle}
+          subtitleStyle={textStyle}
+          rightTitleStyle={textStyle}
           title={getOptionText(item)}
           rightIcon={
             allowClear ? (
@@ -101,11 +110,17 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
               : undefined
           }
           optionTemplate={({ item }) =>
-            fieldTpl(item, optionContainerStyle, undefined, smMargin)
+            fieldTpl(
+              item,
+              optionContainerStyle,
+              optionTextStyle,
+              undefined,
+              smMargin
+            )
           }
           fieldTemplate={({ selectedItem, defaultText, clear }) => {
             return selectedItem ? (
-              fieldTpl(selectedItem, fieldContainerStyle, clear)
+              fieldTpl(selectedItem, fieldContainerStyle, fieldTextStyle, clear)
             ) : (
               <ListItem
                 title={defaultText}
