@@ -1,6 +1,6 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { ViewStyle } from 'react-native'
+import { StyleProp, ViewStyle } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
 import { Icon, IconObject, ListItem } from 'react-native-elements'
 import { Utils } from '../utils'
@@ -17,9 +17,9 @@ export interface DropdownPickerProps<T> {
   footerText?: string
   footerIcon?: IconObject
   footerAction?: () => void
-  containerStyle?: ViewStyle
-  fieldContainerStyle?: ViewStyle
-  optionContainerStyle?: ViewStyle
+  containerStyle?: StyleProp<ViewStyle>
+  fieldContainerStyle?: StyleProp<ViewStyle>
+  optionContainerStyle?: StyleProp<ViewStyle>
   placeholder?: string
 }
 
@@ -46,7 +46,7 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
 
       const fieldTpl = (
         item: T,
-        contrStyle?: ViewStyle,
+        contrStyle?: StyleProp<ViewStyle>,
         clearFn?: () => void,
         margin: number = 0
       ) => (
@@ -88,7 +88,8 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
 
       return (
         <CustomPicker
-          style={{ marginHorizontal: smMargin * 2, ...containerStyle }}
+          containerStyle={containerStyle}
+          style={{ marginHorizontal: smMargin * 2 }}
           value={value}
           maxHeight={400}
           options={options || []}
