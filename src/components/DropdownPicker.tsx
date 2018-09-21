@@ -18,6 +18,9 @@ export interface DropdownPickerProps<T> {
   footerIcon?: IconObject
   footerAction?: () => void
   containerStyle?: StyleProp<ViewStyle>
+  modalStyle?: StyleProp<ViewStyle>
+  titleStyle?: StyleProp<TextStyle>
+  titleContainerStyle?: StyleProp<ViewStyle>
   fieldContainerStyle?: StyleProp<ViewStyle>
   fieldTextStyle?: StyleProp<TextStyle>
   optionContainerStyle?: StyleProp<ViewStyle>
@@ -40,11 +43,14 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
       footerIcon,
       footerAction,
       containerStyle,
+      modalStyle,
       fieldContainerStyle,
       optionContainerStyle,
       fieldTextStyle,
       optionTextStyle,
-      placeholder
+      placeholder,
+      titleStyle,
+      titleContainerStyle
     }) => {
       const smMargin = theme.space.small || 10
 
@@ -97,6 +103,7 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
 
       return (
         <CustomPicker
+          modalStyle={modalStyle}
           containerStyle={containerStyle}
           style={{ marginHorizontal: smMargin * 2 }}
           value={value}
@@ -106,29 +113,50 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
           placeholder={placeholder || title}
           headerTemplate={
             title
-              ? () => <ListItem hideChevron title={Utils.toUpper(title)} />
+              ? () => (
+                  <ListItem
+                    hideChevron
+                    title={Utils.toUpper(title)}
+                    titleStyle={[
+                      {
+                        fontFamily: theme.fontName.bold,
+                        fontWeight: 'bold',
+                        color: theme.color.primaryReverse
+                      },
+                      titleStyle
+                    ]}
+                    containerStyle={[
+                      { backgroundColor: theme.color.primary },
+                      titleContainerStyle
+                    ]}
+                  />
+                )
               : undefined
           }
           optionTemplate={({ item }) =>
             fieldTpl(
               item,
               optionContainerStyle,
-              optionTextStyle,
+              [{ fontFamily: theme.fontName.regular }, optionTextStyle],
               undefined,
               smMargin
             )
           }
           fieldTemplate={({ selectedItem, defaultText, clear }) => {
-            return selectedItem ? (
+            return selectedItem !== null && selectedItem !== undefined ? (
               fieldTpl(selectedItem, fieldContainerStyle, fieldTextStyle, clear)
             ) : (
               <ListItem
                 title={defaultText}
-                titleStyle={{
-                  color: theme.color.lighter,
-                  marginLeft: 0,
-                  marginRight: 0
-                }}
+                titleStyle={[
+                  {
+                    fontFamily: theme.fontName.regular,
+                    color: theme.color.lighter,
+                    marginLeft: 0,
+                    marginRight: 0
+                  },
+                  fieldTextStyle
+                ]}
                 wrapperStyle={{
                   marginLeft: 0,
                   marginRight: -smMargin
