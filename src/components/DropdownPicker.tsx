@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
 import { Icon, IconObject, ListItem } from 'react-native-elements'
+import { globalStyles } from '../styles'
 import { Utils } from '../utils'
 import { ItemIdentity, ItemIdentityAvatar } from './ItemIdentity'
 
@@ -137,20 +138,25 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
             fieldTpl(
               item,
               optionContainerStyle,
-              [{ fontFamily: theme.fontName.regular }, optionTextStyle],
+              [globalStyles.inputText, optionTextStyle],
               undefined,
               smMargin
             )
           }
           fieldTemplate={({ selectedItem, defaultText, clear }) => {
             return selectedItem !== null && selectedItem !== undefined ? (
-              fieldTpl(selectedItem, fieldContainerStyle, fieldTextStyle, clear)
+              fieldTpl(
+                selectedItem,
+                fieldContainerStyle,
+                [globalStyles.inputText, fieldTextStyle],
+                clear
+              )
             ) : (
               <ListItem
                 title={defaultText}
                 titleStyle={[
+                  globalStyles.inputText,
                   {
-                    fontFamily: theme.fontName.regular,
                     color: theme.color.lighter,
                     marginLeft: 0,
                     marginRight: 0

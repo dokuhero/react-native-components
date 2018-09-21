@@ -17,9 +17,9 @@ export const Input = withTheme<InputProps & FormFieldProps>(
             {
               paddingHorizontal: 5,
               color: theme.color.darker,
-              width: '100%',
-              fontFamily: theme.fontName.regular
+              width: '100%'
             },
+            globalStyles.inputText,
             inputStyle
           ]}
           containerStyle={[globalStyles.container, rest.containerStyle]}

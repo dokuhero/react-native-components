@@ -1,4 +1,8 @@
-import { createStyleSheet } from '@dokuhero/react-native-theme'
+import {
+  createStyleSheet,
+  FontNameKeys,
+  FontSizesKeys
+} from '@dokuhero/react-native-theme'
 
 export const globalStyles = createStyleSheet({
   container: {
@@ -8,5 +12,10 @@ export const globalStyles = createStyleSheet({
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  inputText: {
+    fontFamily: FontNameKeys.regular,
+    fontSize: FontSizesKeys.medium,
+    fontWeight: 'normal'
   }
 })

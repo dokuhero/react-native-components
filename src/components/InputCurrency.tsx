@@ -1,6 +1,7 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
 import { CalculatorInput } from 'react-native-calculator'
+import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
 
 export interface InputCurrencyProps extends FormFieldProps {
@@ -19,7 +20,7 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
           paddingBottom: 7,
           borderBottomColor: theme.color.lighter
         }}
-        fieldTextStyle={{ fontSize: theme.fontSize.medium }}
+        fieldTextStyle={globalStyles.inputText}
         borderColor={theme.color.lighter}
         acceptButtonBackgroundColor={theme.color.primary}
         calcButtonBackgroundColor={theme.color.secondary}

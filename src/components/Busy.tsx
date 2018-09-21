@@ -69,7 +69,7 @@ const styles = createStyleSheet({
     textAlign: 'center',
     marginTop: 10,
     color: ColorKeys.white,
-    fontStyle: FontSizesKeys.medium,
+    fontSize: FontSizesKeys.medium,
     fontFamily: FontNameKeys.regular
   }
 })

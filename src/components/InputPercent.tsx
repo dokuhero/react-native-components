@@ -4,6 +4,7 @@ import React from 'react'
 import { InjectedTranslateProps } from 'react-i18next'
 import { Alert } from 'react-native'
 import { CalculatorInput } from 'react-native-calculator'
+import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
 
 export interface InputPercentProps
@@ -22,7 +23,7 @@ export const InputPercent = withLocale<InputPercentProps>('common')(
 
     return (
       <ThemeConsumer>
-        {({ color, fontSize, fontName }) => (
+        {({ color }) => (
           <FormField label={label} errors={errors}>
             <CalculatorInput
               value={value}
@@ -31,10 +32,7 @@ export const InputPercent = withLocale<InputPercentProps>('common')(
                 paddingBottom: 7,
                 borderBottomColor: color.lighter
               }}
-              fieldTextStyle={{
-                fontSize: fontSize.medium,
-                fontFamily: fontName.regular
-              }}
+              fieldTextStyle={globalStyles.inputText}
               borderColor={color.lighter}
               acceptButtonBackgroundColor={color.primary}
               calcButtonBackgroundColor={color.secondary}
