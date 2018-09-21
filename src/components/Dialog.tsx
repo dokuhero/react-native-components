@@ -152,7 +152,7 @@ export class Dialog extends React.Component<DialogProps, DialogState> {
         buttons = [
           {
             onPress: () => onPress(0),
-            title: t('ok'),
+            title: t('yes'),
             icon: {
               name: 'check',
               type: 'feather'
@@ -172,7 +172,7 @@ export class Dialog extends React.Component<DialogProps, DialogState> {
         buttons = [
           {
             onPress: () => onPress(0),
-            title: t('ok'),
+            title: t('yes'),
             icon: {
               name: 'check',
               type: 'feather'
