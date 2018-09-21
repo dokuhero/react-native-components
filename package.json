@@ -1,6 +1,6 @@
 {
   "name": "@dokuhero/react-native-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sets of React Native components that works with dokuhero/react-native-theme and react-i18next",
   "main": "dist/index.js",
   "typings": "typings/index.d.ts",
