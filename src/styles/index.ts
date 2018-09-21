@@ -1,6 +1,6 @@
 import { createStyleSheet } from '@dokuhero/react-native-theme'
 
-export const styles = createStyleSheet({
+export const globalStyles = createStyleSheet({
   container: {
     flex: 1
   },

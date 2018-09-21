@@ -4,7 +4,7 @@ import React from 'react'
 import { InjectedTranslateProps } from 'react-i18next'
 import { RefreshControl, ScrollView, Text, View } from 'react-native'
 import { Icon, IconProps } from 'react-native-elements'
-import { styles } from '../styles'
+import { globalStyles } from '../styles'
 import { WithThemeAndLocaleProps } from '../utils'
 
 interface FullScreenMessageState {
@@ -47,8 +47,8 @@ export class FullScreenMessage extends React.Component<
     return (
       <ScrollView
         contentContainerStyle={[
-          styles.container,
-          styles.centerize,
+          globalStyles.container,
+          globalStyles.centerize,
           { backgroundColor: backgroundColor || theme.color.white }
         ]}
         refreshControl={

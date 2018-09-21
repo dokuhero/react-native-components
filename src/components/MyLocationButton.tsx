@@ -2,7 +2,7 @@ import { withTheme } from '@dokuhero/react-native-theme'
 import * as React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements'
-import { styles } from '../styles'
+import { globalStyles } from '../styles'
 
 export interface MyLocationButtonProps {
   onPress: () => void
@@ -23,7 +23,7 @@ export const MyLocationButton = withTheme<MyLocationButtonProps>(
             backgroundColor: theme.color.semiTransparent,
             borderRadius: 10
           },
-          styles.centerize
+          globalStyles.centerize
         ]}
         onPress={onPress}
       >
