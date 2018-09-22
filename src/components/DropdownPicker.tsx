@@ -27,6 +27,8 @@ export interface DropdownPickerProps<T> {
   optionContainerStyle?: StyleProp<ViewStyle>
   optionTextStyle?: StyleProp<TextStyle>
   placeholder?: string
+  footerContainerStyle?: StyleProp<ViewStyle>
+  footerTextStyle?: StyleProp<TextStyle>
 }
 
 export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
@@ -51,7 +53,9 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
       optionTextStyle,
       placeholder,
       titleStyle,
-      titleContainerStyle
+      titleContainerStyle,
+      footerContainerStyle,
+      footerTextStyle
     }) => {
       const smMargin = theme.space.small || 10
 
@@ -178,10 +182,14 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
                     leftIcon={footerIcon}
                     title={footerText}
                     hideChevron
-                    titleStyle={{
-                      fontFamily: theme.fontName.semiBold,
-                      color: theme.color.darker
-                    }}
+                    containerStyle={footerContainerStyle}
+                    titleStyle={[
+                      {
+                        fontFamily: theme.fontName.semiBold,
+                        color: theme.color.darker
+                      },
+                      footerTextStyle
+                    ]}
                     onPress={() => {
                       if (footerAction) {
                         footerAction()
