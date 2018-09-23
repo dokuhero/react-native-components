@@ -2,7 +2,14 @@ import { withLocaleClass } from '@dokuhero/react-18n-ts-helper'
 import { withThemeClass, WithThemeProps } from '@dokuhero/react-native-theme'
 import React, { ReactNode } from 'react'
 import { InjectedTranslateProps } from 'react-i18next'
-import { Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
+import {
+  Modal,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native'
 import { Utils } from '../utils'
 import { ButtonProps } from './Button'
 import { ButtonGroup } from './ButtonGroup'
@@ -25,6 +32,8 @@ export interface DialogProps
   onPress: (index: number) => void
   onShow?: () => void
   onDismiss?: () => void
+  titleStyle?: StyleProp<TextStyle>
+  hideOnBackgroundPress?: boolean
 }
 
 interface DialogState {
@@ -34,6 +43,11 @@ interface DialogState {
 @withLocaleClass('common')
 @withThemeClass()
 export class Dialog extends React.Component<DialogProps, DialogState> {
+  static defaultProps: Partial<DialogProps> = {
+    hideOnBackgroundPress: true,
+    visible: false
+  }
+
   static getDerivedStateFromProps(
     props: DialogProps,
     state: DialogState
@@ -57,18 +71,27 @@ export class Dialog extends React.Component<DialogProps, DialogState> {
 
   render() {
     const { visible } = this.state
-    const { title, children, theme, onShow, onDismiss } = this
-      .props as Required<DialogProps>
+    const {
+      title,
+      children,
+      theme,
+      onShow,
+      onDismiss,
+      titleStyle,
+      hideOnBackgroundPress
+    } = this.props as Required<DialogProps>
 
     return (
       <Modal
         transparent
         visible={visible}
-        onRequestClose={this.hide}
+        onRequestClose={hideOnBackgroundPress ? this.hide : () => false}
         onShow={onShow}
         onDismiss={onDismiss}
       >
-        <TouchableWithoutFeedback onPress={this.hide}>
+        <TouchableWithoutFeedback
+          onPress={hideOnBackgroundPress ? this.hide : () => false}
+        >
           <View
             style={{
               flex: 1,
@@ -76,35 +99,41 @@ export class Dialog extends React.Component<DialogProps, DialogState> {
               justifyContent: 'center'
             }}
           >
-            <View
-              style={{
-                backgroundColor: theme.color.dark,
-                borderRadius: 10,
-                borderWidth: 0,
-                marginHorizontal: 15,
-                paddingVertical: 15
-              }}
-            >
-              {title && (
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    height: 30
-                  }}
-                >
-                  <Text
-                    style={{ textAlign: 'center', color: theme.color.white }}
+            <TouchableWithoutFeedback onPress={() => false}>
+              <View
+                style={{
+                  backgroundColor: theme.color.dark,
+                  borderRadius: 10,
+                  borderWidth: 0,
+                  marginHorizontal: 15,
+                  paddingVertical: 15
+                }}
+              >
+                {title && (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      height: 30
+                    }}
                   >
-                    {Utils.toUpper(title)}
-                  </Text>
+                    <Text
+                      style={[
+                        { textAlign: 'center', color: theme.color.white },
+                        titleStyle
+                      ]}
+                    >
+                      {Utils.toUpper(title)}
+                    </Text>
+                  </View>
+                )}
+                {children}
+                <View style={styles.buttonContainer}>
+                  {this.renderButtons()}
                 </View>
-              )}
-              {children}
-              <View style={styles.buttonContainer}>{this.renderButtons()}</View>
-            </View>
-            {/* </Card> */}
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
