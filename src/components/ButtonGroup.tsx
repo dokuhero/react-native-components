@@ -45,16 +45,21 @@ export const ButtonGroup = withTheme<ButtonGroupProps>(
     return (
       <BtnGroup
         selectedIndex={selectedIndex || -1}
-        onPress={() => null}
+        onPress={i => {
+          if (onPress) {
+            onPress(i)
+          }
+        }}
         innerBorderStyle={{
           color: borderColor,
           width: borderWidth
         }}
         containerBorderRadius={borderRadius}
+        buttonStyle={{ flex: 1 }}
         buttons={buttons.map((b, i) => ({
           element: () => (
             <Button
-              buttonStyle={{ backgroundColor: theme.color.transparent }}
+              buttonStyle={{ backgroundColor }}
               textStyle={{
                 fontSize: fontSize || theme.fontSize.medium,
                 color: textColor || theme.color.white
@@ -68,6 +73,15 @@ export const ButtonGroup = withTheme<ButtonGroupProps>(
                   b.onPress()
                 }
               }}
+              containerViewStyle={[
+                {
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 0
+                },
+                b.containerViewStyle
+              ]}
+              borderRadius={0}
             />
           )
         }))}
