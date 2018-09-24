@@ -3617,9 +3617,9 @@ react-native-branch@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
 
-react-native-calculator@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-calculator/-/react-native-calculator-0.2.1.tgz#8486d0b222044082615127f2e949605d5f1450e0"
+react-native-calculator@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-calculator/-/react-native-calculator-0.2.2.tgz#ab3b9bcca934cae090ca859a1f6b79a2414d29aa"
 
 react-native-custom-picker@^0.3.1:
   version "0.3.1"
