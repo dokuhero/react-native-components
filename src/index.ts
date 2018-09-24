@@ -33,6 +33,7 @@ export { ImagePicker, ImagePickerProps } from './components/ImagePicker'
 export { Input, InputProps } from './components/Input'
 export { InputCurrency, InputCurrencyProps } from './components/InputCurrency'
 export { InputPercent, InputPercentProps } from './components/InputPercent'
+export { InputNumber, InputNumberProps } from './components/InputNumber'
 export {
   ItemIdentity,
   ItemIdentityProps,

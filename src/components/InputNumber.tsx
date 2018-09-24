@@ -4,14 +4,13 @@ import { CalculatorInput } from 'react-native-calculator'
 import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
 
-export interface InputCurrencyProps extends FormFieldProps {
-  currency?: string
+export interface InputNumberProps extends FormFieldProps {
   value: number
   onChange: (value: number) => void
 }
 
-export const InputCurrency = withTheme<InputCurrencyProps>(
-  ({ currency, value, label, errors, onChange, theme }) => (
+export const InputNumber = withTheme<InputNumberProps>(
+  ({ value, label, errors, onChange, theme }) => (
     <FormField label={label} errors={errors}>
       <CalculatorInput
         value={value}
@@ -24,7 +23,6 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
         borderColor={theme.color.lighter}
         acceptButtonBackgroundColor={theme.color.primary}
         calcButtonBackgroundColor={theme.color.secondary}
-        prefix={(currency || 'Rp') + ' '}
         onChange={(val: number) => {
           if (onChange) {
             onChange(val)
