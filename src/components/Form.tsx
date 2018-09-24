@@ -16,17 +16,39 @@ export interface FormProps<T> {
   children: (props: FormChildrenProps<T>) => React.ReactNode
   validator: Partial<Pick<any, keyof T>>
   onSubmit?: (values: T) => void
+  onChange?: (values: T) => void
   onError?: (errors: FormValidationErrors<T>) => void
   style?: StyleProp<ViewStyle>
+  resetOnInitialValueChanged?: boolean
 }
 
-export class Form<T = {}> extends React.Component<FormProps<T>, any> {
+interface State<T> {
+  fields: T
+  errors: FormValidationErrors<T> | any
+}
+
+export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
+  static getDerivedStateFromProps(
+    props: FormProps<{}>
+  ): Partial<State<{}>> | null {
+    if (props.resetOnInitialValueChanged) {
+      return {
+        fields: props.fields
+      }
+    }
+    return null
+  }
+
   constructor(props: FormProps<T>) {
     super(props)
-    this.state = { ...(props.fields as {}), errors: {} }
+    this.state = {
+      fields: props.fields,
+      errors: {}
+    }
     this.setValue = this.setValue.bind(this)
     this.submit = this.submit.bind(this)
     this.validate = this.validate.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   render() {
@@ -37,7 +59,7 @@ export class Form<T = {}> extends React.Component<FormProps<T>, any> {
         contentContainerStyle={style}
       >
         {children({
-          fields: this.state as T,
+          fields: this.state.fields,
           setValue: this.setValue,
           submit: this.submit,
           errors: this.state.errors
@@ -46,18 +68,27 @@ export class Form<T = {}> extends React.Component<FormProps<T>, any> {
     )
   }
 
+  reset() {
+    this.setState({ fields: this.props.fields })
+  }
+
   setValue(key: keyof T, value: any) {
-    this.setState({ [key]: value })
+    const { onChange } = this.props
+    const newVal = { [key]: value }
+    const fields = { ...(this.state.fields as any), ...newVal }
+    this.setState({ fields }, () => {
+      if (onChange) {
+        onChange(fields)
+      }
+    })
   }
 
   submit() {
     const { onSubmit, onError } = this.props
     this.validate().then(valid => {
       if (valid) {
-        const fields = { ...this.state }
-        delete fields.errors
         if (onSubmit) {
-          onSubmit(fields as T)
+          onSubmit(this.state.fields)
         }
       } else if (onError) {
         onError(this.state.errors)
@@ -67,9 +98,13 @@ export class Form<T = {}> extends React.Component<FormProps<T>, any> {
 
   validate(): Promise<boolean> {
     return new Promise<boolean>(resolve => {
-      const errors = validate.validate(this.state, this.props.validator, {
-        fullMessages: false
-      })
+      const errors = validate.validate(
+        this.state.fields,
+        this.props.validator,
+        {
+          fullMessages: false
+        }
+      )
 
       this.setState({ errors: errors || {} })
       resolve(!!!errors)
