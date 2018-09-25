@@ -1,17 +1,28 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { CalculatorInput } from 'react-native-calculator'
+import { CalculatorInput, CalculatorInputProps } from 'react-native-calculator'
 import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
 
-export interface InputCurrencyProps extends FormFieldProps {
+export interface InputCurrencyProps
+  extends FormFieldProps,
+    CalculatorInputProps {
   currency?: string
   value: number
   onChange: (value: number) => void
 }
 
 export const InputCurrency = withTheme<InputCurrencyProps>(
-  ({ currency, value, label, errors, onChange, theme }) => (
+  ({
+    currency,
+    value,
+    label,
+    errors,
+    onChange,
+    theme,
+    fieldTextStyle,
+    ...rest
+  }) => (
     <FormField label={label} errors={errors}>
       <CalculatorInput
         value={value}
@@ -20,7 +31,7 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
           paddingBottom: 7,
           borderBottomColor: theme.color.lighter
         }}
-        fieldTextStyle={globalStyles.inputText}
+        fieldTextStyle={[globalStyles.inputText, fieldTextStyle]}
         borderColor={theme.color.lighter}
         acceptButtonBackgroundColor={theme.color.primary}
         calcButtonBackgroundColor={theme.color.secondary}
@@ -31,6 +42,7 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
           }
         }}
         height={300}
+        {...rest}
       />
     </FormField>
   )

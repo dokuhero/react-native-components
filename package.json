@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/dokuhero/react-native-components#readme",
   "dependencies": {
-    "react-native-calculator": "^0.2.2",
+    "react-native-calculator": "^0.2.4",
     "react-native-custom-picker": "^0.3.1",
     "react-native-elements": "^0.19.1",
     "react-native-super-grid": "^2.4.3",
