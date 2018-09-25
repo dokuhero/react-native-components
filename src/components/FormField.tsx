@@ -1,13 +1,13 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { TextStyle, View, ViewStyle } from 'react-native'
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native'
 import { FormLabel, FormValidationMessage } from 'react-native-elements'
 
 export interface FormFieldProps {
   label?: string
   errors?: string[]
-  containerStyle?: ViewStyle
-  labelStyle?: TextStyle
+  containerStyle?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
 }
 
 export const FormField = withTheme<FormFieldProps>(
