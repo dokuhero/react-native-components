@@ -6,9 +6,10 @@ export type FormValidationErrors<T> = { [K in keyof T]: string[] }
 
 export interface FormChildrenProps<T> {
   fields: T
-  setValue: (key: keyof T, value: any) => void
-  submit: () => void
   errors: FormValidationErrors<T>
+  setValue(key: keyof T, value?: any): void
+  setValue(state: Partial<T>): void
+  submit(): void
 }
 
 export interface FormProps<T> {
@@ -45,6 +46,7 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
       fields: props.fields,
       errors: {}
     }
+    this.getValue = this.getValue.bind(this)
     this.setValue = this.setValue.bind(this)
     this.submit = this.submit.bind(this)
     this.validate = this.validate.bind(this)
@@ -72,15 +74,20 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
     this.setState({ fields: this.props.fields })
   }
 
-  setValue(key: keyof T, value: any) {
+  setValue(state: {}, val?: any): void
+  setValue(key: keyof T, value: any): void {
     const { onChange } = this.props
-    const newVal = { [key]: value }
+    const newVal = typeof key === 'string' ? { [key]: value } : (key as any)
     const fields = { ...(this.state.fields as any), ...newVal }
     this.setState({ fields }, () => {
       if (onChange) {
         onChange(fields)
       }
     })
+  }
+
+  getValue(key: keyof T): any {
+    return this.state.fields[key]
   }
 
   submit() {
