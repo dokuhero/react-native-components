@@ -10,6 +10,8 @@ export interface FormChildrenProps<T> {
   setValue(key: keyof T, value?: any): void
   setValue(state: Partial<T>): void
   submit(): void
+  clearError(key: keyof T): void
+  validate(): void
 }
 
 export interface FormProps<T> {
@@ -17,7 +19,11 @@ export interface FormProps<T> {
   children: (props: FormChildrenProps<T>) => React.ReactNode
   validator: Partial<Pick<any, keyof T>>
   onSubmit?: (values: T) => void
-  onChange?: (values: T) => void
+  onChange?: (
+    values: T,
+    validate: () => void,
+    clearError: (key: keyof T) => void
+  ) => void
   onError?: (errors: FormValidationErrors<T>) => void
   style?: StyleProp<ViewStyle>
   resetOnInitialValueChanged?: boolean
@@ -46,6 +52,7 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
       fields: props.fields,
       errors: {}
     }
+    this.clearError = this.clearError.bind(this)
     this.getValue = this.getValue.bind(this)
     this.setValue = this.setValue.bind(this)
     this.submit = this.submit.bind(this)
@@ -64,7 +71,9 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
           fields: this.state.fields,
           setValue: this.setValue,
           submit: this.submit,
-          errors: this.state.errors
+          errors: this.state.errors,
+          clearError: this.clearError,
+          validate: this.validate
         })}
       </ScrollView>
     )
@@ -81,7 +90,7 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
     const fields = { ...(this.state.fields as any), ...newVal }
     this.setState({ fields }, () => {
       if (onChange) {
-        onChange(fields)
+        onChange(fields, this.validate, this.clearError)
       }
     })
   }
@@ -116,5 +125,10 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
       this.setState({ errors: errors || {} })
       resolve(!!!errors)
     })
+  }
+
+  clearError(key: keyof T) {
+    const toClear = { [key]: undefined }
+    this.setState({ errors: { ...this.state.errors, ...toClear } })
   }
 }
