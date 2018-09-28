@@ -10,8 +10,17 @@ export interface InputNumberProps extends FormFieldProps, CalculatorInputProps {
 }
 
 export const InputNumber = withTheme<InputNumberProps>(
-  ({ value, label, errors, onChange, theme, fieldTextStyle, ...rest }) => (
-    <FormField label={label} errors={errors}>
+  ({
+    value,
+    label,
+    errors,
+    onChange,
+    theme,
+    fieldTextStyle,
+    containerStyle,
+    ...rest
+  }) => (
+    <FormField label={label} errors={errors} containerStyle={containerStyle}>
       <CalculatorInput
         value={value}
         fieldContainerStyle={{

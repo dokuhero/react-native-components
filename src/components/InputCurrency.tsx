@@ -21,9 +21,10 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
     onChange,
     theme,
     fieldTextStyle,
+    containerStyle,
     ...rest
   }) => (
-    <FormField label={label} errors={errors}>
+    <FormField label={label} errors={errors} containerStyle={containerStyle}>
       <CalculatorInput
         value={value}
         fieldContainerStyle={{
