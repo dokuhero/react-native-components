@@ -2,6 +2,7 @@ import React from 'react'
 import {
   FlatList,
   RefreshControl,
+  StyleProp,
   StyleSheet,
   Text,
   ViewStyle
@@ -13,8 +14,9 @@ export interface ListViewProps<T> {
   key?: keyof T
   renderItem: (item: T) => React.ReactElement<any>
   onRefresh?: () => Promise<any>
-  containerStyle?: ViewStyle
+  containerStyle?: StyleProp<ViewStyle>
   title?: string
+  noTopBorder?: boolean
 }
 
 interface ListViewState {
@@ -39,11 +41,18 @@ export class ListView<T> extends React.Component<
       data,
       renderItem,
       onRefresh,
-      title
+      title,
+      noTopBorder
     } = this.props
 
     return (
-      <List containerStyle={[styles.container, containerStyle]}>
+      <List
+        containerStyle={[
+          styles.container,
+          noTopBorder ? { borderTopWidth: 0 } : {},
+          containerStyle
+        ]}
+      >
         {title && (
           <Text style={{ marginHorizontal: 20, marginTop: 10, fontSize: 18 }}>
             {title}
