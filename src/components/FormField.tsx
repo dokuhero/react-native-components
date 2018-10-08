@@ -16,7 +16,13 @@ export const FormField = withTheme<FormFieldProps>(
       {label && (
         <FormLabel
           fontFamily={theme.fontName.semiBold}
-          labelStyle={[{ fontFamily: theme.fontName.semiBold }, labelStyle]}
+          labelStyle={[
+            {
+              fontFamily: theme.fontName.semiBold,
+              fontSize: theme.fontSize.small
+            },
+            labelStyle
+          ]}
         >
           {label}
         </FormLabel>

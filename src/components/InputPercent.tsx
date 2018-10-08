@@ -1,22 +1,30 @@
 import { withLocale } from '@dokuhero/react-18n-ts-helper'
 import { ThemeConsumer } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { InjectedTranslateProps } from 'react-i18next'
 import { Alert } from 'react-native'
-import { CalculatorInput } from 'react-native-calculator'
+import { CalculatorInput, CalculatorInputProps } from 'react-native-calculator'
 import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
 
 export interface InputPercentProps
   extends FormFieldProps,
-    Partial<InjectedTranslateProps> {
+    CalculatorInputProps {
   value: number
   onChange: (value: number) => void
   max?: number
 }
 
 export const InputPercent = withLocale<InputPercentProps>('common')(
-  ({ value, label, errors, onChange, t, max }) => {
+  ({
+    value,
+    label,
+    errors,
+    onChange,
+    t,
+    max,
+    containerStyle,
+    fieldTextStyle
+  }) => {
     if (max) {
       max = 100
     }
@@ -24,15 +32,22 @@ export const InputPercent = withLocale<InputPercentProps>('common')(
     return (
       <ThemeConsumer>
         {({ color }) => (
-          <FormField label={label} errors={errors}>
+          <FormField
+            label={label}
+            errors={errors}
+            containerStyle={[containerStyle, { paddingRight: 10 }]}
+          >
             <CalculatorInput
               value={value}
               fieldContainerStyle={{
                 marginLeft: 20,
-                paddingBottom: 7,
-                borderBottomColor: color.lighter
+                borderBottomColor: color.grey
               }}
-              fieldTextStyle={globalStyles.inputText}
+              fieldTextStyle={[
+                globalStyles.inputText,
+                { marginBottom: 6 },
+                fieldTextStyle
+              ]}
               borderColor={color.lighter}
               acceptButtonBackgroundColor={color.primary}
               calcButtonBackgroundColor={color.secondary}

@@ -24,15 +24,22 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
     containerStyle,
     ...rest
   }) => (
-    <FormField label={label} errors={errors} containerStyle={containerStyle}>
+    <FormField
+      label={label}
+      errors={errors}
+      containerStyle={[containerStyle, { paddingRight: 10 }]}
+    >
       <CalculatorInput
         value={value}
         fieldContainerStyle={{
           marginLeft: 20,
-          paddingBottom: 7,
-          borderBottomColor: theme.color.lighter
+          borderBottomColor: theme.color.grey
         }}
-        fieldTextStyle={[globalStyles.inputText, fieldTextStyle]}
+        fieldTextStyle={[
+          globalStyles.inputText,
+          { marginBottom: 6 },
+          fieldTextStyle
+        ]}
         borderColor={theme.color.lighter}
         acceptButtonBackgroundColor={theme.color.primary}
         calcButtonBackgroundColor={theme.color.secondary}

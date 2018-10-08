@@ -1,6 +1,6 @@
 import { withTheme } from '@dokuhero/react-native-theme'
 import React from 'react'
-import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { CustomPicker } from 'react-native-custom-picker'
 import { Icon, IconObject, ListItem } from 'react-native-elements'
 import { globalStyles } from '../styles'
@@ -24,11 +24,14 @@ export interface DropdownPickerProps<T> {
   titleContainerStyle?: StyleProp<ViewStyle>
   fieldContainerStyle?: StyleProp<ViewStyle>
   fieldTextStyle?: StyleProp<TextStyle>
+  placeholderTextStyle?: StyleProp<TextStyle>
   optionContainerStyle?: StyleProp<ViewStyle>
   optionTextStyle?: StyleProp<TextStyle>
   placeholder?: string
   footerContainerStyle?: StyleProp<ViewStyle>
   footerTextStyle?: StyleProp<TextStyle>
+  hideFieldChevron?: boolean
+  hideOptionChevron?: boolean
 }
 
 export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
@@ -55,7 +58,10 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
       titleStyle,
       titleContainerStyle,
       footerContainerStyle,
-      footerTextStyle
+      footerTextStyle,
+      hideFieldChevron,
+      hideOptionChevron,
+      placeholderTextStyle
     }) => {
       const smMargin = theme.space.small || 10
 
@@ -64,7 +70,8 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
         contrStyle?: StyleProp<ViewStyle>,
         textStyle?: StyleProp<TextStyle>,
         clearFn?: () => void,
-        margin: number = 0
+        margin: number = 0,
+        hideChevron?: boolean
       ) => (
         <ListItem
           wrapperStyle={[
@@ -73,8 +80,8 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
               marginRight: margin || -smMargin
             }
           ]}
-          containerStyle={contrStyle}
-          hideChevron={!!!clearFn}
+          containerStyle={[contrStyle, { paddingBottom: 5 }]}
+          hideChevron={!!!clearFn || hideChevron}
           avatar={
             getOptionAvatar ? (
               <ItemIdentity avatar={getOptionAvatar(item)} size={28} />
@@ -141,19 +148,34 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
           optionTemplate={({ item }) =>
             fieldTpl(
               item,
-              optionContainerStyle,
+              [
+                {
+                  borderBottomColor: theme.color.grey,
+                  borderBottomWidth: StyleSheet.hairlineWidth
+                },
+                optionContainerStyle
+              ],
               [globalStyles.inputText, optionTextStyle],
               undefined,
-              smMargin
+              smMargin,
+              hideOptionChevron
             )
           }
           fieldTemplate={({ selectedItem, defaultText, clear }) => {
             return selectedItem !== null && selectedItem !== undefined ? (
               fieldTpl(
                 selectedItem,
-                fieldContainerStyle,
+                [
+                  {
+                    borderBottomColor: theme.color.grey,
+                    borderBottomWidth: 1
+                  },
+                  fieldContainerStyle
+                ],
                 [globalStyles.inputText, fieldTextStyle],
-                clear
+                clear,
+                undefined,
+                hideFieldChevron
               )
             ) : (
               <ListItem
@@ -165,13 +187,20 @@ export function DropdownPicker<T>(props: DropdownPickerProps<T>) {
                     marginLeft: 0,
                     marginRight: 0
                   },
-                  fieldTextStyle
+                  fieldTextStyle,
+                  placeholderTextStyle
                 ]}
                 wrapperStyle={{
                   marginLeft: 0,
                   marginRight: -smMargin
                 }}
-                containerStyle={fieldContainerStyle}
+                containerStyle={[
+                  {
+                    borderBottomColor: theme.color.grey,
+                    borderBottomWidth: 1
+                  },
+                  fieldContainerStyle
+                ]}
               />
             )
           }}

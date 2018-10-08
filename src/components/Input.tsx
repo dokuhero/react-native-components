@@ -9,9 +9,13 @@ export interface InputProps extends FormInputProps {}
 export const Input = withTheme<InputProps & FormFieldProps>(
   ({ theme, label, errors, inputStyle, ...rest }) => {
     return (
-      <FormField label={label} errors={errors}>
+      <FormField
+        label={label}
+        errors={errors}
+        containerStyle={{ paddingBottom: 4 }}
+      >
         <FormInput
-          underlineColorAndroid={theme.color.lighter}
+          underlineColorAndroid={theme.color.grey}
           {...rest}
           inputStyle={[
             {
