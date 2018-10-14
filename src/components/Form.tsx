@@ -26,6 +26,7 @@ export interface FormProps<T> {
   ) => void
   onError?: (errors: FormValidationErrors<T>) => void
   style?: StyleProp<ViewStyle>
+  containerStyle?: StyleProp<ViewStyle>
   resetOnInitialValueChanged?: boolean
 }
 
@@ -61,9 +62,10 @@ export class Form<T = {}> extends React.Component<FormProps<T>, State<T>> {
   }
 
   render() {
-    const { children, style } = this.props
+    const { children, style, containerStyle } = this.props
     return (
       <ScrollView
+        style={containerStyle}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={style}
       >
