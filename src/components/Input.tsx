@@ -3,11 +3,26 @@ import React from 'react'
 import { FormInput, FormInputProps } from 'react-native-elements'
 import { globalStyles } from '../styles'
 import { FormField, FormFieldProps } from './FormField'
+import { StaticField } from './StaticField'
 
-export interface InputProps extends FormInputProps {}
+export interface InputProps extends FormInputProps {
+  disabled?: boolean
+}
 
 export const Input = withTheme<InputProps & FormFieldProps>(
-  ({ theme, label, errors, inputStyle, ...rest }) => {
+  ({ theme, label, errors, inputStyle, disabled, ...rest }) => {
+    if (disabled) {
+      return (
+        <StaticField
+          label={label}
+          value={rest.value || ''}
+          labelStyle={rest.labelStyle}
+          containerStyle={rest.containerStyle}
+          valueStyle={inputStyle}
+        />
+      )
+    }
+
     return (
       <FormField
         label={label}
