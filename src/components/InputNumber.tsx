@@ -7,6 +7,7 @@ import { FormField, FormFieldProps } from './FormField'
 export interface InputNumberProps extends FormFieldProps, CalculatorInputProps {
   value: number
   onChange: (value: number) => void
+  disabled?: boolean
 }
 
 export const InputNumber = withTheme<InputNumberProps>(
@@ -18,6 +19,7 @@ export const InputNumber = withTheme<InputNumberProps>(
     theme,
     fieldTextStyle,
     containerStyle,
+    disabled,
     ...rest
   }) => (
     <FormField
@@ -26,11 +28,19 @@ export const InputNumber = withTheme<InputNumberProps>(
       containerStyle={[containerStyle, { paddingRight: 10 }]}
     >
       <CalculatorInput
-        value={value}
-        fieldContainerStyle={{
-          marginLeft: 20,
-          borderBottomColor: theme.color.grey
+        disabled={disabled}
+        fieldDisabledTextStyle={{
+          color: theme.color.grey,
+          fontFamily: theme.fontName.semiBold
         }}
+        value={value}
+        fieldContainerStyle={[
+          {
+            marginLeft: 20,
+            borderBottomColor: theme.color.grey
+          },
+          disabled ? { borderBottomWidth: 0 } : {}
+        ]}
         fieldTextStyle={[
           globalStyles.inputText,
           { marginBottom: 6 },

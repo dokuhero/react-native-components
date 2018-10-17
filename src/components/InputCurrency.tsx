@@ -10,6 +10,7 @@ export interface InputCurrencyProps
   currency?: string
   value: number
   onChange: (value: number) => void
+  disabled?: boolean
 }
 
 export const InputCurrency = withTheme<InputCurrencyProps>(
@@ -22,6 +23,7 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
     theme,
     fieldTextStyle,
     containerStyle,
+    disabled,
     ...rest
   }) => (
     <FormField
@@ -30,11 +32,19 @@ export const InputCurrency = withTheme<InputCurrencyProps>(
       containerStyle={[containerStyle, { paddingRight: 10 }]}
     >
       <CalculatorInput
-        value={value}
-        fieldContainerStyle={{
-          marginLeft: 20,
-          borderBottomColor: theme.color.grey
+        disabled={disabled}
+        fieldDisabledTextStyle={{
+          color: theme.color.grey,
+          fontFamily: theme.fontName.semiBold
         }}
+        value={value}
+        fieldContainerStyle={[
+          {
+            marginLeft: 20,
+            borderBottomColor: theme.color.grey
+          },
+          disabled ? { borderBottomWidth: 0 } : {}
+        ]}
         fieldTextStyle={[
           globalStyles.inputText,
           { marginBottom: 6 },
